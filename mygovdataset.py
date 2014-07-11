@@ -13,7 +13,9 @@ class MYGovDataSet:
         soup = BeautifulSoup(urllib2.urlopen(self.url).read())
         self.org_metadata = soup.find(lambda tag: tag.name=='table' and tag.has_attr('id') and tag['id']=="view-b")
         update_view_download = soup.findAll('td',{'class':'last'})
-        assert len(update_view_download) == 1, "fuckers changed their layout, unexpected: {0}".format(update_view_download)
+        if len(update_view_download) != 1:
+            raise Exception("unexpected layout, got update_view_download: {0}".format(update_view_download))
+
         update_view_download_string = str(update_view_download[0].text)
 
         m = re.search("Last Updated :\s*([0-9]+)-([0-9]+)-([0-9]+)\s*([0-9]+):([0-9]+):([0-9]+)\s*\|", update_view_download_string)
