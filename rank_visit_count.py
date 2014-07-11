@@ -20,7 +20,8 @@ print "Got {0} fails in a row; assuming there are no more valid data sets (count
 # sort by view count, highest to lowest
 datasets.sort(key=lambda x: x.view_count, reverse=True)
 
+rank = 1
 for dataset in datasets:
-    print "---------- last updated: {0} views: {1} ----------".format(dataset.last_updated, dataset.view_count)
+    print "---------- rank: {0} updated: {1} views: {2} ----------".format(rank, dataset.last_updated, dataset.view_count)
     print dataset.org_metadata
-    print "--------------------------------------------------------------------------------"
+    rank += 1
