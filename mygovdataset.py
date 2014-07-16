@@ -8,9 +8,18 @@ import datetime
 
 class MYGovDataSet:
 
-    def __init__(self, url):
-        self.url = url
-        soup = BeautifulSoup(urllib2.urlopen(self.url).read())
+    def __init__(self, url, payload_text=None):
+        '''
+        The conventional initialization method is to provide the target url and let the object do it's own fetching, but for testing purposes a payload can be provided directly, in which case the url is ignored (not even saved).
+        '''
+        if payload_text:
+            self.url = None
+            payload = payload_text
+        else:
+            self.url = url
+            payload = urllib2.urlopen(self.url).read()
+        soup = BeautifulSoup(payload)
+
         self.org_metadata = soup.find(lambda tag: tag.name=='table' and tag.has_attr('id') and tag['id']=="view-b")
         update_view_download = soup.findAll('td',{'class':'last'})
         if len(update_view_download) != 1:
@@ -29,3 +38,12 @@ class MYGovDataSet:
 
         m = re.search("Viewed :([0-9]+)", update_view_download_string)
         self.view_count = int(m.group(1))
+
+        download = update_view_download[0].findAll('a',{'target':'_blank'})
+        self.asset_url = download[0].get('href')
+        self.ico_file = download[0].contents[0].get('src')
+        if 'ico-pdf' in self.ico_file:
+            self.asset_type = "PDF"
+        else:
+            print "WARNING: Unknown asset type (ico file: {0}, asset_url: {1})".format(self.ico_file, self.asset_url)
+            self.asset_type = "UNKNOWN"
