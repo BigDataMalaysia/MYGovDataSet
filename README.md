@@ -9,3 +9,4 @@ The aim of this project is to track the development of [data.gov.my](http://data
 * Tracking asset types - Are we moving away from PDFs towards CSVs?
 * Data custodian activity - How often are data sets updated? Which ministries are actively pushing out more datasets?
 
+**Contributions more than welcome.** Please check the Github issues for specific ideas on what is needed. Feel free to get in touch with tramdas with any thoughts.
