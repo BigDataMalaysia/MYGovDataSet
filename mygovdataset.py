@@ -8,9 +8,18 @@ import datetime
 
 class MYGovDataSet:
 
-    def __init__(self, url):
-        self.url = url
-        soup = BeautifulSoup(urllib2.urlopen(self.url).read())
+    def __init__(self, url, payload_text=None):
+        '''
+        The conventional initialization method is to provide the target url and let the object do it's own fetching, but for testing purposes a payload can be provided directly, in which case the url is ignored (not even saved).
+        '''
+        if payload_text:
+            self.url = None
+            payload = payload_text
+        else:
+            self.url = url
+            payload = urllib2.urlopen(self.url).read()
+        soup = BeautifulSoup(payload)
+
         self.org_metadata = soup.find(lambda tag: tag.name=='table' and tag.has_attr('id') and tag['id']=="view-b")
         update_view_download = soup.findAll('td',{'class':'last'})
         if len(update_view_download) != 1:
