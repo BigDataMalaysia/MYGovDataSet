@@ -8,3 +8,5 @@ print dataset
 
 print "---------- updated: {0} views: {1} ----------".format(dataset.last_updated, dataset.view_count)
 print dataset.org_metadata
+print "Asset URL: {0}".format(dataset.asset_url)
+print "Asset type: {0}".format(dataset.asset_type)

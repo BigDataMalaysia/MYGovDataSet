@@ -38,3 +38,13 @@ class MYGovDataSet:
 
         m = re.search("Viewed :([0-9]+)", update_view_download_string)
         self.view_count = int(m.group(1))
+
+        download = update_view_download[0].findAll('a',{'target':'_blank'})
+        self.asset_url = download[0].get('href')
+        print self.asset_url
+        self.ico_file = download[0].contents[0].get('src')
+        if 'ico-pdf' in self.ico_file:
+            self.asset_type = "PDF"
+        else:
+            print "WARNING: Unknown asset type (ico file: {0})".format(self.ico_file)
+            self.asset_type = "UNKNOWN"
