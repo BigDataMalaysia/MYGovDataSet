@@ -11,8 +11,9 @@ while fails_in_a_row < FAILS_IN_A_ROW_LIMIT:
         some_data_set = mygovdataset.MYGovDataSet(url)
         fails_in_a_row = 0
         datasets.append(some_data_set)
+        print "id {0} added to list".format(dataset_id, e)
     except Exception, e:
-        print "id {0} didn't work out; exception: {1}".format(dataset_id, e)
+        print "WARNING: id {0} didn't work out; exception: {1}".format(dataset_id, e)
         fails_in_a_row += 1
     dataset_id += 1
 print "Got {0} fails in a row; assuming there are no more valid data sets (count: {1})".format(FAILS_IN_A_ROW_LIMIT, len(datasets))
