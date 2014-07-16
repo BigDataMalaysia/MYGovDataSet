@@ -41,10 +41,9 @@ class MYGovDataSet:
 
         download = update_view_download[0].findAll('a',{'target':'_blank'})
         self.asset_url = download[0].get('href')
-        print self.asset_url
         self.ico_file = download[0].contents[0].get('src')
         if 'ico-pdf' in self.ico_file:
             self.asset_type = "PDF"
         else:
-            print "WARNING: Unknown asset type (ico file: {0})".format(self.ico_file)
+            print "WARNING: Unknown asset type (ico file: {0}, asset_url: {1})".format(self.ico_file, self.asset_url)
             self.asset_type = "UNKNOWN"
