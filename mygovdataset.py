@@ -40,10 +40,19 @@ class MYGovDataSet:
         self.view_count = int(m.group(1))
 
         download = update_view_download[0].findAll('a',{'target':'_blank'})
-        self.asset_url = download[0].get('href')
-        self.ico_file = download[0].contents[0].get('src')
-        if 'ico-pdf' in self.ico_file:
-            self.asset_type = "PDF"
-        else:
-            print "WARNING: Unknown asset type (ico file: {0}, asset_url: {1})".format(self.ico_file, self.asset_url)
-            self.asset_type = "UNKNOWN"
+        self.asset_url = []
+        self.ico_file = []
+        self.asset_type = []
+        if len(download) > 1:
+            print "WARNING: Multiple assets discovered"
+        for asset_number in range(0, len(download)):
+            self.asset_url.append(download[asset_number].get('href'))
+            self.ico_file.append(download[asset_number].contents[0].get('src'))
+            if 'ico-pdf' in self.ico_file[-1]:
+                asset_type = "PDF"
+            elif 'ico-excel' in self.ico_file[-1]:
+                asset_type = "XLS"
+            else:
+                print "WARNING: Unknown asset type (ico file: {0}, asset_url: {1})".format(self.ico_file[-1], self.asset_url[-1])
+                asset_type = "UNKNOWN"
+            self.asset_type.append(asset_type)
