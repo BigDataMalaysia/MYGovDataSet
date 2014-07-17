@@ -10,7 +10,7 @@ while fails_in_a_row < FAILS_IN_A_ROW_LIMIT:
     try:
         some_data_set = mygovdataset.MYGovDataSet(url)
         fails_in_a_row = 0
-        datasets.append(some_data_set)
+        datasets.append({"dataset" : some_data_set, "dataset_id" : dataset_id})
         print "id {0} added to list".format(dataset_id, e)
     except Exception, e:
         print "WARNING: id {0} didn't work out; exception: {1}".format(dataset_id, e)
@@ -19,10 +19,10 @@ while fails_in_a_row < FAILS_IN_A_ROW_LIMIT:
 print "Got {0} fails in a row; assuming there are no more valid data sets (count: {1})".format(FAILS_IN_A_ROW_LIMIT, len(datasets))
 
 # sort by view count, highest to lowest
-datasets.sort(key=lambda x: x.view_count, reverse=True)
+datasets.sort(key=lambda x: x["dataset"].view_count, reverse=True)
 
 rank = 1
+print "#rank, id, view_count"
 for dataset in datasets:
-    print "---------- rank: {0} updated: {1} views: {2} ----------".format(rank, dataset.last_updated, dataset.view_count)
-    print dataset.org_metadata
+    print "{0}, {1}, {2}".format(rank, dataset["dataset_id"], dataset["dataset"].view_count)
     rank += 1
