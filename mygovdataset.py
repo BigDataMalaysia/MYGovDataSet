@@ -52,6 +52,8 @@ class MYGovDataSet:
                 asset_type = "PDF"
             elif 'ico-excel' in self.ico_file[-1]:
                 asset_type = "XLS"
+            elif 'ico-csv' in self.ico_file[-1]:
+                asset_type = "CSV"
             else:
                 print "WARNING: Unknown asset type (ico file: {0}, asset_url: {1})".format(self.ico_file[-1], self.asset_url[-1])
                 asset_type = "UNKNOWN"
