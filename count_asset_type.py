@@ -2,7 +2,7 @@
 import mygovdataset
 import pprint
 
-FAILS_IN_A_ROW_LIMIT = 10
+FAILS_IN_A_ROW_LIMIT = 30
 datasets = list()
 dataset_id = 0
 fails_in_a_row = 0
